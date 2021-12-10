@@ -1,0 +1,286 @@
+#include<iostream>
+#include<fstream>
+#include<string>
+#include<conio.h>
+
+using namespace std;
+
+class patients
+{
+private:
+
+    string name;
+    string tname;
+    int tage;
+    int age;
+    int mobile;
+    int tmobile;
+
+public:
+
+    void patients_registetion()
+    {
+        cout<<"||patients registration||"<<endl;
+
+        cout<<"Enter patient name:";
+        cin>>name;
+        cout<<"Enter patient age:";
+        cin>>age;
+        cout<<"Enter mobile number:";
+        cin>>mobile;
+
+
+        fstream patient1;
+        patient1.open("patient_rec.txt",ios::app | ios::in);
+        patient1<<name<<" "<<age<<" "<<mobile<<endl;
+
+        cout<<"patien record recorded"<<endl;
+        cout<<"enter any key to continu"<<endl;
+        getch();
+
+
+
+
+
+    }
+
+    void patients_discharge()
+    {
+
+        cout<<"Enter patient name:";
+        cin>>tname;
+        cout<<"tEnter patient age:";
+        cin>>tage;
+
+        fstream patien;
+        patien.open("patient_rec.txt",ios::app | ios::in);
+
+        patien>>name>>age>>mobile;
+
+        fstream temp;
+        temp.open("temp.txt",ios::app |ios::in);
+
+        while(!patien.eof())
+        {
+
+            if(tname==name | tage==age)
+            {
+
+                cout<<"dischaged"<<endl;
+
+            }else
+            {
+
+                temp<<name<<" "<<age<<" "<<mobile<<endl;
+
+            }
+
+
+
+        }
+
+        temp.close();
+        patien.close();
+
+        remove("patient_rec.txt");
+        rename("temp.txt","patient_rec.txt");
+        cout<<"patien record recorded"<<endl;
+        cout<<"enter any key to continu"<<endl;
+        getch();
+
+    }
+
+
+};
+
+class Doctor
+{
+private:
+
+
+
+
+public:
+    string fname,lname,email;
+    int mobile,age,overtime;
+    float basicsalary,totsalary;
+
+    void detail()
+    {
+        cout<<"Enter first name:-";
+        cin>>fname;
+        cout<<"Enter last name:-";
+        cin>>lname;
+        cout<<"Enter age:-";
+        cin>>age;
+        cout<<"Enter mobile number:-";
+        cin>>mobile;
+        cout<<"Enter email number:-";
+        cin>>email;
+
+
+             fstream doctor;
+             doctor.open("doctor.txt",ios::app |ios::in);
+
+             doctor<<fname<<" "<<lname<<" "<<age<<" "<<mobile<<" "<<email<<endl;
+             cout<<"doctor record recorded"<<endl;
+              cout<<"\nEnter any key to main menu";
+
+         }
+
+         void salary1(int basicsalary)
+        {
+        cout<<"Enter over time:-";
+        cin>>overtime;
+        totsalary=basicsalary+(overtime*500);
+        cout<<"\nYour salary:"<<totsalary;
+        cout<<"\nEnter any key to main menu";
+        getch();
+        }
+
+};
+
+class Nurse:public Doctor
+{
+private:
+
+public:
+
+    void detail()
+    {
+        cout<<"Enter first name:-";
+        cin>>fname;
+        cout<<"Enter last name:-";
+        cin>>lname;
+        cout<<"Enter age:-";
+        cin>>age;
+        cout<<"Enter mobile number:-";
+        cin>>mobile;
+        cout<<"Enter email number:-";
+        cin>>email;
+
+
+             fstream nurse;
+             nurse.open("doctor.txt",ios::app |ios::in);
+
+             nurse<<fname<<" "<<lname<<" "<<age<<" "<<mobile<<" "<<email<<endl;
+             cout<<"Nurse record recorded"<<endl;
+             cout<<"\nEnter any key to main menu";
+
+         }
+
+          void salary1(int basicsalary)
+        {
+        cout<<"Enter over time:-";
+        cin>>overtime;
+        totsalary=basicsalary+(overtime*500);
+        cout<<"\nYour salary:"<<totsalary;
+        cout<<"\nEnter any key to main menu";
+        getch();
+        }
+
+
+
+
+
+};
+int main()
+{
+    lable:
+        system("cls");
+    cout<<"NIBM HOSPITAL SYSTEM"<<endl;
+    cout<<"01.Patients"<<endl;
+    cout<<"02.Doctor"<<endl;
+    cout<<"03.Nurse"<<endl;
+    cout<<"04.exit"<<endl;
+    cout<<"Please Enter your select:"<<endl;
+
+    int x;
+    cin>>x;
+
+    switch (x)
+    {
+    case 1:
+        {
+            cout<<"01.patients registration"<<endl;
+            cout<<"02.patients discharge"<<endl;
+            cin>>x;
+            if(x==1)
+            {
+                patients obj1;
+                obj1.patients_registetion();
+                goto lable;
+            }else
+            {
+                patients obj1;
+                obj1.patients_discharge();
+                goto lable;
+            }
+
+        }
+        break;
+         case 2:
+             {
+                system("cls");
+                cout<<"01.Salary"<<endl;
+                cout<<"02.Doctor registetion"<<endl;
+                cin>>x;
+
+                 if(x==1)
+                {
+                Doctor obj2;
+                obj2.salary1(100000);
+                getch();
+                goto lable;
+                }else if(x==2)
+            {
+                Doctor obj1;
+                obj1.detail();
+                getch();
+                goto lable;
+
+             }
+             goto lable;
+             }
+        break;
+         case 3:
+             {
+                cout<<"01.salary"<<endl;
+                cout<<"02.detail"<<endl;
+                cin>>x;
+                if(x==1)
+                {
+                Nurse obj2;
+                obj2.salary1(50000);
+                getch();
+                goto lable;
+                }else if(x==2)
+            {
+                Nurse obj1;
+                obj1.detail();
+                getch();
+                goto lable;
+
+             }
+             }
+        break;
+         case 4:
+             {
+                 exit(0);
+             }
+        break;
+
+    default:
+        {
+            cout<<"worng input"<<endl;
+            getch();
+
+        }
+        break;
+    }
+
+
+
+    return 0;
+}
+
